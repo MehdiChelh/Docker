@@ -56,7 +56,7 @@ RUN apt-get install -y libgsl-dev \
     libxml2-dev \
     libssl-dev
 
-RUN R -e "remotes::install_github('golem')"
+RUN R -e "remotes::install_github('Thinkr-open/golem')"
 # Standard packages from CRAN
 #RUN R -e "install.packages(read.delim('requirements-std.txt', sep='\n', header=F)[, 1])"
 # Remplacer cette ligne par un script bash
@@ -65,7 +65,7 @@ RUN R -e "remotes::install_github('golem')"
 # TODO : recuperer le nom du package et la source via un fichier de config a cote du Dockerfile 
 RUN mkdir /srv/shiny-server/app \ 
     apt-get install -y git \
-    git clone MehdiChelh/triangle.tlbx /srv/shiny-server/app \
+    git clone http://github.com/MehdiChelh/triangle.tlbx /srv/shiny-server/app \
     R -e "install.packages('/srv/shiny-server/app/triangle.tlbx', repos=NULL, type='source')"
 
 COPY shiny-server.conf /etc/shiny-server/shiny-server.conf
