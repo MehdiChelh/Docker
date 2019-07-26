@@ -63,17 +63,18 @@ RUN R -e "remotes::install_github('Thinkr-open/golem')"
 #RUN R -e "remotes::install_github('MehdiChelh/triangle.tlbx')"
 
 # TODO : recuperer le nom du package et la source via un fichier de config a cote du Dockerfile 
-RUN mkdir /srv/shiny-server/app \ 
-    apt-get install -y git \
-    git clone http://github.com/MehdiChelh/triangle.tlbx /srv/shiny-server/app \
-    R -e "install.packages('/srv/shiny-server/app/triangle.tlbx', repos=NULL, type='source')"
+RUN mkdir /srv/shiny-server/app 
+
+RUN apt-get install -y git && \
+    git clone http://github.com/MehdiChelh/triangle.tlbx /srv/shiny-server/app/triangle.tlbx && \
+    R -e "remotes::install_github('MehdiChelh/triangle.tlbx')"
 
 COPY shiny-server.conf /etc/shiny-server/shiny-server.conf
 
 EXPOSE 3838
 
 # mettre ca dans un fichier bash ?
-RUN shiny-server
+#RUN shiny-server
 #COPY shiny-server.sh /usr/bin/shiny-server.sh
 #CMD ["/usr/bin/shiny-server.sh"]
 #CMD [“/usr/sbin/init”]
