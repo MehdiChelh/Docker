@@ -11,7 +11,8 @@ MAINTAINER Winston Chang "winston@rstudio.com"
 RUN apt-get update && apt-get install -y software-properties-common
 
 # Add R apt repository
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E084DAB9
+# RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E084DAB9
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 51716619e084dab9
 #     -> Link below to update if necessary
 RUN add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
 RUN apt update
@@ -56,7 +57,7 @@ RUN apt-get install -y libgsl-dev \
     libxml2-dev \
     libssl-dev
 
-RUN R -e "remotes::install_github('Thinkr-open/golem')"
+# RUN R -e "remotes::install_github('Thinkr-open/golem')"
 # Standard packages from CRAN
 #RUN R -e "install.packages(read.delim('requirements-std.txt', sep='\n', header=F)[, 1])"
 # Remplacer cette ligne par un script bash
@@ -65,6 +66,7 @@ RUN R -e "remotes::install_github('Thinkr-open/golem')"
 # TODO : recuperer le nom du package et la source via un fichier de config a cote du Dockerfile 
 RUN mkdir /srv/shiny-server/app 
 
+# Remplacer le dépôt github par le dépôt gitlab
 RUN apt-get install -y git && \
     git clone http://github.com/MehdiChelh/triangle.tlbx /srv/shiny-server/app/triangle.tlbx && \
     R -e "remotes::install_github('MehdiChelh/triangle.tlbx')"
