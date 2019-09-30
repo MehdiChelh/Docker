@@ -67,8 +67,11 @@ RUN apt-get install -y libgsl-dev \
 RUN mkdir /srv/shiny-server/app 
 
 # Remplacer le dépôt github par le dépôt gitlab
+RUN mkdir /tmp_docker
+COPY requirements.txt /tmp_docker/requirements.txt
 RUN apt-get install -y git && \
-    R -e "install.packages(as.character(read.csv('./requirements.txt')$package))"
+    R -e "install.packages(as.character(read.csv('/tmp_docker/requirements.txt')$package))"
+RUN rm -r -d /tmp_docker
 #    R -e "remotes::install_github('MehdiChelh/triangle.tlbx')"
 #    git clone http://github.com/MehdiChelh/triangle.tlbx /srv/shiny-server/app/triangle.tlbx && \
 
