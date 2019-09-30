@@ -68,12 +68,15 @@ RUN mkdir /srv/shiny-server/app
 
 # Remplacer le dépôt github par le dépôt gitlab
 RUN apt-get install -y git && \
-    git clone http://github.com/MehdiChelh/triangle.tlbx /srv/shiny-server/app/triangle.tlbx && \
-    R -e "remotes::install_github('MehdiChelh/triangle.tlbx')"
+    R -e "install.packages(as.character(read.csv('./requirements.txt')$package))"
+#    R -e "remotes::install_github('MehdiChelh/triangle.tlbx')"
+#    git clone http://github.com/MehdiChelh/triangle.tlbx /srv/shiny-server/app/triangle.tlbx && \
 
-COPY shiny-server.conf /etc/shiny-server/shiny-server.conf
+# COPY shiny-server.conf /etc/shiny-server/shiny-server.conm
 
 EXPOSE 3838
+
+# Ajouter l'exécution d'un bash contenant les commandes pour l'installation du package et la configuration du serveur
 
 # mettre ca dans un fichier bash ?
 #RUN shiny-server
