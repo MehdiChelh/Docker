@@ -41,7 +41,7 @@ RUN apt-get install -y \
     libxt-dev
 
 # Je pense que cette partie n'est pas nécessaire en version "commerciale" (ie. non pro)
-RUN apt-get install libssl1.0.0 libssl-dev
+# RUN apt-get install libssl1.0.0 libssl-dev
 
 # Download and install shiny server
 RUN wget "https://download3.rstudio.org/ubuntu-14.04/x86_64/shiny-server-1.5.9.923-amd64.deb"  && \
@@ -71,9 +71,7 @@ RUN mkdir /tmp_docker
 COPY requirements.txt /tmp_docker/requirements.txt
 RUN apt-get install -y git && \
     R -e "install.packages(read.csv('/tmp_docker/requirements.txt', stringsAsFactor = FALSE)[, 1])"
-RUN R -e "install.packages('shinytest')"
-RUN R -e "shinytest::installDependencies()"
-RUN R -e "install.packages('devtools')"
+RUN R -e "devtools::install_version('shiny.router', version = '0.1.1', repos = 'http://cran.us.r-project.org')"
 RUN rm -r -d /tmp_docker
 #    R -e "remotes::install_github('MehdiChelh/triangle.tlbx')"
 #    git clone http://github.com/MehdiChelh/triangle.tlbx /srv/shiny-server/app/triangle.tlbx && \
